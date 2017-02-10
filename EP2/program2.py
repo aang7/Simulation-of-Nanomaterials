@@ -50,7 +50,6 @@ for p in particulas:
 #ahora a ejecutar R script
 #retcode = subprocess.call(cmd)
 
-#Aqui me quede--- todavia en versión pañales...
     
 background_colour = (255,255,255)
 (width, height) = (800, 700)
@@ -61,40 +60,46 @@ screen.fill(background_colour)
 
 x = 0
 y = 0
-repeticiones = 200
+repeticiones = 10
 puntos_list = list()
-
-for i in range(repeticiones):
-    coordenadas = list()
-    if (random.random() <= 0.5):
-        x +=20
-        y +=30
-    else:
-        x -=20
-        y -=20
-    #coordenadas.append(x)
-    #coordenadas.append(y)
-    size = width * (random.randint(10, 30)/100.0)
-    #print size;
-    puntos_list.append(Particle((x + width/2, y + height/2), int(size)))    
+xHalf = width/2
+yHalf = height/2
 
 
 
-#drawing particles
-for particle in puntos_list:
-    particle.display()
 
-pygame.display.flip()
 
 running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-            if event.type == VIDEORESIZE:
-            # The main code that resizes the window:
-            # (recreate the window with the new size)
-                screen = pygame.display.set_mode((event.w, event.h),
-                                                 pygame.RESIZABLE)
-                pygame.display.update()
+            #if event.type == VIDEORESIZE:
+             #   screen = pygame.display.set_mode((event.w, event.h),pygame.RESIZABLE)
+              #  width = event.w
+               # height = event.h
+                #pygame.display.flip()
+    for i in range(repeticiones):
+        size = width * (random.randint(10, 11)/1000.0)    
+        coordenadas = list()
+        if (random.random() <= 0.5):
+            x +=random.randint(20, 50)
+            y +=random.randint(20, 50)
+        else:
+            x -=random.randint(20, 50)
+            y -=random.randint(20, 50)
+            #coordenadas.append(x)
+            #coordenadas.append(y)
+            #print size;
+            if (((xHalf + x) <= width) or (xHalf + x >= 0)) and (((yHalf + y) <= height) or ((yHalf + y) >= 0)):
+                puntos_list.append(Particle((x + width/2, y + height/2), int(size)))    
+    
+    #drawing particles
+    for particle in puntos_list:
+        particle.display()
 
+    pygame.display.flip()
+
+
+del puntos_list #resetando lista
+    
