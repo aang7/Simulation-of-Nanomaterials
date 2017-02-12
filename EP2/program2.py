@@ -16,7 +16,7 @@ class Particle:
         self.y = y
         self.size = size
         self.colour = (random.randint(0, 255), random.randint(0, 255), 255)
-        self.thickness = 0
+        self.thickness = 1
 
     def display(self):
         pygame.draw.circle(screen, self.colour, (self.x, self.y), self.size, self.thickness)
@@ -74,32 +74,28 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-            #if event.type == VIDEORESIZE:
-             #   screen = pygame.display.set_mode((event.w, event.h),pygame.RESIZABLE)
-              #  width = event.w
-               # height = event.h
-                #pygame.display.flip()
+            
+    puntos_list = []
+
     for i in range(repeticiones):
         size = width * (random.randint(10, 11)/1000.0)    
-        coordenadas = list()
         if (random.random() <= 0.5):
-            x +=random.randint(20, 50)
-            y +=random.randint(20, 50)
-        else:
-            x -=random.randint(20, 50)
-            y -=random.randint(20, 50)
-            #coordenadas.append(x)
-            #coordenadas.append(y)
-            #print size;
-            if (((xHalf + x) <= width) or (xHalf + x >= 0)) and (((yHalf + y) <= height) or ((yHalf + y) >= 0)):
-                puntos_list.append(Particle((x + width/2, y + height/2), int(size)))    
-    
+            if (x <= xHalf) and  (x >= 0 ):
+                x +=random.randint(20, 50)
+            else:
+                x -=random.randint(20, 50)
+            if (y >= 0) and  (y <= height):
+                y +=random.randint(20, 50)
+            else:
+                y -=random.randint(20, 100)
+
+            puntos_list.append(Particle((x , y ), int(size)))    
+            #puntos_list.append(Particle((x + width/2, y + height/2), int(size)))  
+
     #drawing particles
     for particle in puntos_list:
         particle.display()
-
+        
     pygame.display.flip()
 
-
-del puntos_list #resetando lista
     
