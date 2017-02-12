@@ -16,7 +16,7 @@ class Particle:
         self.y = y
         self.size = size
         self.colour = (random.randint(0, 255), random.randint(0, 255), 255)
-        self.thickness = 1
+        self.thickness = 0
 
     def display(self):
         pygame.draw.circle(screen, self.colour, (self.x, self.y), self.size, self.thickness)
@@ -60,42 +60,46 @@ screen.fill(background_colour)
 
 x = 0
 y = 0
-repeticiones = 10
+repeticiones = 5
 puntos_list = list()
 xHalf = width/2
 yHalf = height/2
 
 
 
-
-
 running = True
+switch = True
+
 while running:
+    #screen.fill(background_colour)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
             
     puntos_list = []
-
+    
     for i in range(repeticiones):
         size = width * (random.randint(10, 11)/1000.0)    
         if (random.random() <= 0.5):
-            if (x <= xHalf) and  (x >= 0 ):
-                x +=random.randint(20, 50)
+            if switch:
+                x =random.randint(0 , int(width - size))
+                y =random.randint(0, int(height - size))
+                switch = False
             else:
-                x -=random.randint(20, 50)
-            if (y >= 0) and  (y <= height):
-                y +=random.randint(20, 50)
-            else:
-                y -=random.randint(20, 100)
+                x =random.randint(0, int(width - size))
+                y =random.randint(0, int(height - size))
+                switch = True
 
-            puntos_list.append(Particle((x , y ), int(size)))    
-            #puntos_list.append(Particle((x + width/2, y + height/2), int(size)))  
-
+            puntos_list.append(Particle((x , y ), int(size)))  
     #drawing particles
     for particle in puntos_list:
         particle.display()
         
+        
     pygame.display.flip()
+    
 
+pygame.quit()
     
